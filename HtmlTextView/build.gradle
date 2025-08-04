@@ -1,26 +1,36 @@
-apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 
 android {
-    compileSdkVersion 29
+    namespace 'org.sufficientlysecure.htmltextview'  // Add this if missing
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 29
-        versionName '4.0'
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "4.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
-publish {
-    userOrg = 'sufficientlysecure'
-    groupId = 'org.sufficientlysecure'
-    artifactId = 'html-textview'
-    publishVersion = android.defaultConfig.versionName
-    website = 'https://github.com/SufficientlySecure/html-textview'
-    desc = 'HtmlTextView is an extended TextView component for Android, which can load HTML and converts it into Spannable for displaying it.'
-}
-
 dependencies {
-    implementation 'androidx.annotation:annotation:1.1.0'
-
- }
+    implementation 'androidx.core:core:1.10.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
